@@ -1,0 +1,24 @@
+Dear PK, 
+
+Please access the demo server with these credentials.
+
+ssh IP: 54.254.5.144
+username: ubuntu
+access key is attached: 
+
+ERPNext url: backuperp.excelbd.com
+user: administrator
+pass: Admin123
+
+All the reports have a prefix called Excel [i.e Excel Company Performance Summary]. Please fix the issue with Territory and Customer Group filters in this report. 
+
+Server: report.eisltd.org
+port:22
+user: frappe
+pass: Report@Admin@123!
+
+Server:  54.255.177.58
+port:22
+user: frappe
+pass: Report@Admin@123!
+

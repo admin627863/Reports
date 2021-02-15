@@ -1,0 +1,79 @@
+frappe.ui.form.on('New Enquiry', {
+	validate(frm) {
+	    frappe.call({
+			method: "erpnext.crm.doctype.new_enquiry.new_enquiry.existing_lead",
+			args: {"mobile_number":frm.doc.mobile_number,"name":frm.doc.name1,"gender":frm.doc.gender,"blood_group":frm.doc.blood_group,"age":frm.doc.age,"diseases":frm.doc.diseases,"address":frm.doc.address,"city":frm.doc.city,"landmark":frm.doc.landmark}
+	
+				});
+		frappe.call({
+			method: "erpnext.crm.doctype.lead.lead.end_call",
+			args: {"agent_id":frm.doc.agent_name,"disposition":frm.doc.disposition1,"time":frm.doc.callback_date}
+	
+				});
+		frm.reload_doc()
+// 		cur_frm.refresh();
+// 		frm.refresh_fields("");
+	},
+	mobile_number(frm) {
+	    frappe.call({
+			method: "erpnext.crm.doctype.new_enquiry.new_enquiry.existing_lead",
+			args: {"mobile_number":frm.doc.mobile_number}
+	
+				});	
+	},
+	onload(frm){
+	    console.log(frappe.session)
+	    frm.set_value("agent_name", frappe.session.user_fullname)
+	},
+	state(frm) {
+	    frappe.call({
+			method: "erpnext.crm.doctype.new_enquiry.new_enquiry.search",
+			args: {"state":frm.doc.state},
+	        callback: function(r) {
+	           // console.log(r.message);
+	           cur_frm.set_df_property("district","options",r.message);
+	            }
+				});	
+	},
+		district(frm) {
+	    frappe.call({
+			method: "erpnext.crm.doctype.new_enquiry.new_enquiry.search_tehsil",
+			args: {"district":frm.doc.district},
+	        callback: function(r) {
+	            //if (r.message.length>1){
+	            console.log(r.message);
+	           cur_frm.set_df_property("tehsil","options",r.message);
+	            //}
+	           // else{
+	           //     console.log(r.message[0]);
+	           //     cur_frm.set_df_property("tehsil","options",r.message);
+	           //      //cur_frm.set_value("tehsil",r.message[0]);
+	           //      }
+	        }
+				});	
+	},
+		tehsil(frm) {
+	    frappe.call({
+			method: "erpnext.crm.doctype.new_enquiry.new_enquiry.search_city",
+			args: {"tehsil":frm.doc.tehsil},
+	        callback: function(r) {
+	            console.log(r.message);
+	           cur_frm.set_df_property("city1","options",r.message);
+	            }
+				});	
+	},
+		city1(frm) {
+		    if (frm.doc.city1!=NA)
+    {		  
+	    frappe.call({
+			method: "erpnext.crm.doctype.new_enquiry.new_enquiry.search_pincode",
+			args: {"city":frm.doc.city1},
+	        callback: function(r) {
+	           // console.log(r.message);
+	           cur_frm.set_value("pincode",r.message);
+	            }
+				});	
+    }
+        
+    },
+})

@@ -1,0 +1,122 @@
+143.110.189.102
+
+https://core.jslcpl.com/#login
+
+
+*change logo in website setting -> Brand -> Attach logo
+<img src='/files/logo-01-1.webp' style='max-width: 110px;'>
+
+
+*Add marquee in website setting -> Banner HTML -> paste this ->
+<marquee  bgcolor="#3b664a" class="text-white" >For Complaints: ✉️ hello@extensionerp.com or  Call us: 📞 8010360360 </marquee>
+
+* Logo and favicon change:
+/home/frappe/frappe-bench/apps/erpnext/erpnext/public/images upload erp-icon.svg
+
+fix the favicon size
+*desk logo s‪ize
+/home/frappe/frappe-bench/sites/assets/css in desk.min.css
+.navbar .navbar-home img {
+    width: 65px;
+    margin-right: 0;
+    margin-top: -3px;
+}
+
+add make in india logo/Manish acharya ji
+/home/frappe/frappe-bench/apps/frappe/frappe/templates/includes/navbar in navbar_login.html
+<a class="nav-link btn-login-area" href="/login">{{ _("<img src='https://photos.smugmug.com/photos/i-bWNH6DK/0/O/i-bWNH6DK.png' style='max-width: 110px;'>") }}</a>
+
+
+change Email footer:-
+*Go to search
+  type : system settings
+*select email option below 
+*Add your own footer in Email Footer Address
+JEENA SIKHO LIFE CARE PVT LTD<br><a href="https://extensionerp.com/"> sent via Extension ERP</a>
+*trick in 1)Disable Standard Email Footer
+              2) Hide footer in auto email reports
+
+*login-button color
+/home/frappe/frappe-bench/sites/assets/css in frappe-web-b4.css
+.btn-primary {
+    color: #fff;
+    background-color: #84be38;
+    border-color: #84be38;
+}
+
+*ADD Poweredby in login
+/home/frappe/frappe-bench/apps/frappe/frappe/www in login.html
+    <div class="row footer-bottom-line mt-5">
+				<div class="text-muted small col-sm-6 col-12">
+					{% if copyright %}
+						&copy; {{ copyright }}
+					{% endif %}
+					{% if footer_address %}
+						{% if copyright %}<br>{% endif %}
+						{{ footer_address }}
+					{% endif %}
+				</div>
+				{# powered #}
+				<div class="text-muted small col-sm-6 col-12
+					text-right footer-powered">
+					{% block powered %}
+						{% include "templates/includes/footer/footer_powered1.html" %}
+					{% endblock %}
+				</div>
+	</div>
+
+
+In this -> /home/frappe/frappe-bench/apps/erpnext/erpnext/templates/includes/footer change the file name footer_powered.html to footer_powered1.html
+
+<a  class="text-white" href="https://extensionerp.com/" target="_blank" class="text-muted">Powered by Extension Technologies  - Your Technology Partner </a>
+
+
+
+
+
+*Remove existing footer
+/home/frappe/frappe-bench/apps/erpnext/erpnext/templates/includes/footer
+ remove/rename file footer_powered.html
+ or  after that remove build on frappe frappe from /home/frappe/frappe-bench/apps/frappe/frappe/templates/includes/footer in footer_powered.html
+
+
+ @unsecure to secure jeena sikho@
+root
+password:justdoit@94
+su frappe
+cd
+cd frappe-bench
+*sudo bench config dns_multitenant on
+*sudo bench setup add-domain core.jslcpl.com --site site1.local
+*sudo bench setup nginx
+*sudo service nginx restart
+*sudo -H bench setup lets-encrypt site1.local --custom-domain core.jslcpl.com 
+  
+  (email:Tarun@extensionerp.com)
+
+*bench setup nginx
+*sudo service nginx start
+*bench restart
+
+
+
+
+*Remove update email 
+/home/frappe/frappe-bench/apps/erpnext/erpnext/templates/includes/footer in footer_extension.html
+
+*Remove blank space in footer
+/home/frappe/frappe-bench/sites/assets/css in frappe-web-b4.css 
+  remove this->
+.web-footer {
+    padding: 5rem 0;
+    min-height: 140px;
+    border-top: 1px solid #ebecf1;
+}
+
+change jobs web page background color 
+/home/frappe/frappe-bench/sites/assets/css in frappe.web.b4.css
+Add this css
+.website-list {background-color: white; padding: 10px;}
+
+
+

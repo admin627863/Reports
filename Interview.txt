@@ -1,0 +1,37 @@
+frappe.ui.form.on('Interview', {
+	validate(frm){
+	    let total_amount = 0.0;
+		var tbl = cur_frm.doc.goals || [];
+		for(var i = 0; i < tbl.length; i++) {
+			total_amount+=flt(tbl[i].per_weightage)
+	    }
+	    if (total_amount > 100){
+	        frappe.throw("Total weightage assigned should be 100%. It is "+ total_amount + "%")
+	    }
+	}
+})
+
+frappe.ui.form.on('Appraisal Goal', {
+	score(frm, cdt, cdn) {
+		var d = locals[cdt][cdn];
+		if (flt(d.score) > 5) {
+			frappe.msgprint(__("Score must be less than or equal to 5"));
+			d.score = 0;
+			refresh_field('score', d.name, 'goals');
+		}
+		else {
+			frm.trigger('set_score_earned');
+		}
+	},
+	per_weightage(frm, cdt, cdn) {
+	    let total_amount = 0.0;
+		var tbl = cur_frm.doc.goals || [];
+		for(var i = 0; i < tbl.length; i++) {
+			total_amount+=flt(tbl[i].per_weightage)
+	    }
+	    if (total_amount > 100){
+	        frappe.throw("Total weightage assigned should be 100%. It is "+ total_amount + "%")
+	    }
+		}
+	
+})

@@ -1,0 +1,29 @@
+frappe.ui.form.on('Job Recognition Form', {
+	refresh(frm) {
+		// your code here
+	}
+})
+
+frappe.ui.form.on('Applicant Table', {
+	selected_applicant(frm,cdt,cdn) {
+		calculate_total_applicant(frm, cdt, cdn)
+		
+	}
+})
+
+let calculate_total_applicant = function (frm, cdt, cdn){
+		let total_applicant = 0;
+		var tbl = cur_frm.doc.no_of_applicant_selected || [];
+		for(var i = 0; i < tbl.length; i++) {
+			total_applicant+=flt(tbl[i].selected_applicant)
+		}
+        console.log(total_applicant)
+        if (cur_frm.doc.no_of_required_emp >total_applicant){
+            frm.set_value("status","In - Progress");
+        }
+        else if (cur_frm.doc.no_of_required_emp <= total_applicant){
+            frm.set_value("status","Completed");
+        }
+		frm.set_value("total_selected_applicant",total_applicant);
+		refresh_field("total_selected_applicant")
+}

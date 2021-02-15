@@ -1,0 +1,236 @@
+//frappe.ui.form.on("Quotation", "sold_by",function(frm){
+
+  //  if (frm.doc.sold_by == "Direct")
+//    {
+ //       set_field_options("tc_name", ["Internal Terms and Conditions"]);
+//        cur_frm.set_value("tc_name", "Internal Terms and Conditions");
+  //  }
+ //   else if (frm.doc.sold_by == "Distributor")
+  //  {
+  //      set_field_options("tc_name", ["Distributor Terms and Conditions"]);
+  //      cur_frm.set_value("tc_name", "Distributor Terms and Conditions");
+  //  }
+//});
+frappe.ui.form.on("Quotation", {
+    sold_by: function(frm) {
+        switch(frm.doc.sold_by) {
+            case 'Direct':
+                  frm.set_value("tc_name","Internal Terms and Conditions");
+                	break;
+            case 'Distributor':
+                          frm.set_value("tc_name","Distributor Terms and Conditions");
+         
+
+}
+        } 
+    },
+);
+
+/*frappe.ui.form.on("Quotation", {
+    refresh: function(frm) {
+      $.each(frm.doc.items || [], function(i, d) {
+        if (cur_frm.doc.distributor_type =="Normal Dealer")  { 
+        d.discount_percentage = 25;
+       
+        }
+         
+        else if (cur_frm.doc.distributor_type =="Super Dealer")  { 
+        d.discount_percentage = 30;
+         }
+           else if (cur_frm.doc.distributor_type =="Others")  { 
+        d.discount_percentage = 0;
+         }
+      });
+   frm.refresh_field("items"); 
+   cur_frm.refresh_field("items");
+    }
+});*/
+
+frappe.ui.form.on("Quotation", "distributor_type", function(frm) {
+      $.each(frm.doc.items || [], function(i, d) {
+        if (cur_frm.doc.distributor_type =="Normal Dealer")  { 
+        d.discount_percentage = 25;
+        }
+         
+        else if (cur_frm.doc.distributor_type =="Super Dealer")  { 
+        d.discount_percentage = 30;
+        
+        frm.refresh_field("items"); 
+         }
+           else if (cur_frm.doc.distributor_type =="Others")  { 
+        d.discount_percentage = 0;
+         
+         }
+        d.discount_amount = d.price_list_rate/100 * d.discount_percentage;
+        d.rate = d.price_list_rate - d.discount_amount;
+        //d.amount = d.price_list_rate - d.discount_amount
+        console.log("inn");
+        frm.refresh_field("d.rate");
+      });
+   frm.refresh_field("items"); 
+});
+
+frappe.ui.form.on("Quotation", {
+    validate: function(frm) {
+      $.each(frm.doc.items || [], function(i, d) {
+        if (cur_frm.doc.distributor_type =="Normal Dealer" && d.discount_percentage>25 )  { 
+         d.workflowdiscount = 1;
+        }
+         
+        else if (cur_frm.doc.distributor_type =="Super Dealer" && d.discount_percentage>30 )  { 
+        d.workflowdiscount = 2;
+         }
+           else  { 
+        d.workflowdiscount = 0;
+         }
+      });
+    },
+    onload: function(frm) {
+		frappe.call({
+			method: "frappe.client.get",
+			args: {
+				doctype: "User",
+				filters: {"name": frappe.user.name} ,//user is current user here
+				fieldname :["location"]   
+			},
+			callback: function(r) {
+				frm.set_value("zone", r.message.location)
+				frm.set_value("user_name", frappe.user.name)
+			}
+		});
+	}
+});
+ /*frappe.ui.form.on("Quotation", {
+	validate: function(frm, cdt, cdn) {
+		var d = locals[cdt][cdn];
+		var workflowdiscount = 0;
+        frappe.model.set_value(d.doctype, d.name, "workflowdiscount", d.workflowdiscount);        
+        frm.doc.items.forEach(function(d) { workflowdiscount += d.workflowdiscount; });
+        frm.set_value('test', workflowdiscount);
+        
+        $.each(frm.doc.items || [], function(i, d) {
+        if (cur_frm.doc.distributor_type =="Normal Dealer")  { 
+        d.discount_percentage = 25;
+        }
+         
+        else if (cur_frm.doc.distributor_type =="Super Dealer")  { 
+        d.discount_percentage = 30;
+        
+        frm.refresh_field("items"); 
+         }
+        //   else if (cur_frm.doc.distributor_type =="Others")  { 
+        //d.discount_percentage = 0;
+         
+         //}
+        d.discount_amount = d.price_list_rate/100 * d.discount_percentage;
+        d.rate = d.price_list_rate - d.discount_amount;
+        //d.amount = d.price_list_rate - d.discount_amount
+        
+        frm.refresh_field("d.rate");
+      });
+   frm.refresh_field("items"); 
+	}
+});*/
+
+frappe.ui.form.on('Quotation', {
+	validate(frm) {
+	    if (cur_frm.doc.test>0.1 && cur_frm.doc.distributor_type =="Normal Dealer" ){
+cur_frm.doc.workflowdiscount=1;
+}
+else if (cur_frm.doc.test>0.1 && cur_frm.doc.distributor_type =="Super Dealer" ){
+cur_frm.doc.workflowdiscount=2;
+}
+else {
+cur_frm.doc.workflowdiscount=0;
+}
+	}
+});
+//Discount Percentage for Distributors
+
+//frappe.ui.form.on("Quotation", {
+//    onload: function(frm) {
+//        switch(frm.doc.distributor_type) {
+//            case 'Normal Dealer':
+ //                 frm.set_value("additional_discount_percentage",25);
+   //             	break;
+     //       case 'Super Dealer':
+       //                   frm.set_value("additional_discount_percentage",30);
+         //                 break;
+           // case 'Others':
+             //             frm.set_value("additional_discount_percentage",0);
+//}
+//        } 
+  //  }
+//);
+
+//frappe.ui.form.on("Quotation", {
+//    distributor_type: function(frm) {
+//        switch(frm.doc.distributor_type) {
+//            case 'Normal Dealer':
+//                  frm.set_value("additional_discount_percentage",25);
+//                	break;
+//            case 'Super Dealer':
+//                          frm.set_value("additional_discount_percentage",30);
+//                          break;
+//            case 'Others':
+//                          frm.set_value("additional_discount_percentage",0);
+//         }
+//        } 
+//    }
+//);
+
+frappe.ui.form.on('Quotation Item', {
+	item_code(frm,cdt,cdn) {
+	    var d = locals[cdt][cdn];
+	    //frappe.call({
+		//	method: "erpnext.crm.doctype.lead.lead.get_lead_details",
+		//	args: {doc:cur_frm.doc
+		//	},
+		//	callback: function(r) {
+		//		if(r.message) {
+		//		    console.log("callback")
+		//		}
+		//	}
+	    //})
+	    /*console.log(cur_frm.doc.distributor_type);
+		if (cur_frm.doc.distributor_type =="Normal Dealer")  { 
+        //d.discount_percentage = 25;
+        frappe.model.set_value(cdt, cdn, 'discount_percentage', 25);
+        }
+         
+        else if (cur_frm.doc.distributor_type =="Super Dealer")  { 
+        d.discount_percentage = 30;
+        
+        frm.refresh_field("items"); 
+         }
+           else if (cur_frm.doc.distributor_type =="Others")  { 
+        d.discount_percentage = 0;
+         
+         }
+        d.discount_amount = d.price_list_rate/100 * d.discount_percentage
+        d.rate = d.price_list_rate - d.discount_amount
+        d.amount = d.price_list_rate - d.discount_amount
+        console.log("inn item");
+        frm.refresh_field("d.rate");*/
+    
+   frm.refresh_field("items");
+	},
+	
+	items_add(frm, cdt, cdn) {
+	    var d = locals[cdt][cdn];
+	    console.log(cur_frm.doc.distributor_type);
+		if (cur_frm.doc.distributor_type =="Normal Dealer")  { 
+        d.discount_percentage = 25;
+        }
+         
+        else if (cur_frm.doc.distributor_type =="Super Dealer")  { 
+        d.discount_percentage = 30;
+        frm.refresh_field("items"); 
+         }
+           else if (cur_frm.doc.distributor_type =="Others")  { 
+        d.discount_percentage = 0;
+         
+         }
+        frm.refresh_field("items"); 
+	}
+})

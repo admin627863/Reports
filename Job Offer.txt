@@ -1,0 +1,25 @@
+frappe.ui.form.on('Job Offer', {
+	employee_grade(frm) {
+		if (frm.doc.employee_grade) {
+			return frm.call({
+				method: "get_employee_grade_slab",
+				doc: frm.doc,
+				callback: function() {
+					refresh_field('employee_grade_slab');
+				}
+			});
+		}
+	},
+	setup(frm){
+	    frm.set_query('job_requisition_form', () => {
+            return {
+                filters: {'status': ['Not in',['Completed']]}
+            };
+        }),
+        frm.set_query('training_batch', () => {
+            return {
+                filters: {'training_status': ['in',['Not Started']]}
+            };
+        })
+	}
+})

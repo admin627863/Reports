@@ -1,0 +1,15 @@
+frappe.ui.form.on('Purchase Receipt', {
+	validate(frm)  {
+      $.each(frm.doc.items || [], function(i, d) {
+              d.short_quantity = d.invoice_quantity-d.received_qty;
+    
+       });
+	}
+   });
+cur_frm.fields_dict.gate_entry_no.get_query = function(doc) {
+	return {
+		filters: {
+			docstatus: 1
+		}
+	}
+}   

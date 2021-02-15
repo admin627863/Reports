@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table, th {
+          border: 1px solid black;
+          border-collapse: collapse;
+           
+        }
+        table, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+         table, tr {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+    </style>
+
+ <body>
+ <div  id="header-html" class="hidden-pdf" style="text-align: center;" >
+    {% set letter_head_name = frappe.get_all('Letter Head', filters={'is_default': 1}, fields=['name']) %}
+    {% if letter_head_name %}
+      {% set letter_head = frappe.get_doc("Letter Head", letter_head_name[0]) %}
+      {% if letter_head %}
+        <p style="text-align: center;">{{ letter_head.content }}</p>
+      {% else %}
+      {% endif %}
+    {% else %}
+    {% endif %}
+</div>       
+
+<!--<table style="border:hidden;">
+    <thead>
+    <tr style="vertical-align: text-top;">
+    <th width="25%"></th>
+    <th width="50%" style="border:hidden; text-align: center; "><img src="/files/header.png" width="100%"></th>
+    <th width="25%"></th>
+    </tr>
+    </thead>
+</table>-->
+            <div class=text;>
+                <p style="font-size:12px;"> 
+                    <b>Our Ref. No. {{ doc.name }} <span style="margin-left:300px;">Date: {{frappe.utils.get_datetime(doc.transaction_date).strftime('%d-%b-%Y') }}</span></b><br><br>
+                    <b>To, </b><br><br>
+                    <b>Mr. {{ doc.customer_name }}</b><br>
+                    <!--<b>{{ doc.address_display }}</b><br><br>-->
+                                  <b>{% if doc.address_display==none%}{{ frappe.db.get_value("Lead", doc.party_name, "location" ) }}{% else %}{{doc.address_display}} {% endif %}</b><b>
+                   <br> {{ frappe.db.get_value("Lead", doc.party_name, "email_id" ) }},{{ frappe.db.get_value("Lead", doc.party_name, "contact_no" ) }}
+                   <br><br>
+                    
+                     {%- for row in doc.items -%}
+                   <b>Subjects: - Offer for {{ row.item_name}}</b><br><br>
+                    {%- endfor -%}
+                    
+                   <b >Dear Sir,</b><br><br>
+                   <p>We would like to introduce ourselves as <b> an I.S.O 9001-2008.</b> Certified company. We have expertise in doing the entire process of <b>solid waste management</b> as well as Fabrication of all solid & liquid waste handling & processing equipment’s.</p><br>
+                   <p class="pt-4">Nature Green has engineering expertise of establishing large scale Municipal Solid Waste Management Plants MSW plant, municipal solid waste management plant, composing plant & solid waste material recovery plants.</p><br>
+                    <p class="pt-4"><b>Waste Handling & Processing Equipment’s:-</p> <br> 
+                       <p class="pt-4"> Complete Trommel setup, Industrial Vacuum Cleaner, Dry & Wet Garbage Suction Machine, Super Sucker With 
+                        Dump Tanks, Portable & Static Compactor, Hook Loaders, Road Sweeping Machine, All type of Hoppers Tippers, 
+                        Tricycle Rickshaw, Recovery Van, Mobile Repairing Van, Twin & Single Bin Dumper Placers, Refuse compactors, 
+                        Dust Bins, Containers of all Sizes, Wheel Barrow, Mobile Toilet Van, Sewer cleaning machines, Tractor Coupled 
+                        Suction Machines etc. We are also manufacturing Sky-Lifts, Broadcasting vans and Animal catchers, D-silt & 
+                        Nala Cleaning Machine & Also Operation & Maintenance of Super Sucker Machine, Road Sweeper Machine, 
+                        Suction cum Jetting Machine or waste handling & processing equipment’s. </p><br>
+                       <p class="pt-4"> We are also dealing in Waste Handling Machinery parts & accessories as Vacuum Pump, Jetting Pumps, 
+                        Gearbox, and Auxiliary Engine/Electric motors, Hydraulic Parts, Pneumatic Parts, Safety Valves, Filters and 
+                        Brushes etc.</b><br></p>
+                        
+                        <p class="pt-4">We have supplied these machines to various Government organization as well as private parties in India and other 
+                        Countries. We have fully equipped Manufacturing Unit at <b>Ghaziabad & Dadri, Greater Noida, Uttar Pradesh 
+                        (INDIA)</b> for manufacturing and after sales support.</p>  <br>
+                        Thanking you and looking forward for a positive response from your side.<br><br>
+                    <b>Yours Sincerely</b><br><br>
+                    For <b>Nature Green Tools & Machines Pvt. Ltd.</b><br><br>
+                    Cell+91-9599785278, 77 <br>
+                    E-mail- naturegreen2016@gmail.com
+                    
+                </p>
+            </div>
+         
+   
+
+  <div class="page-break"></div>
+            <div class="text3" style="text-align: center;">
+            <p><br><br><font size ="2">We are submit our Offer along with Terms & Condition & Technical Specification following table: </font><br><br></p>
+            </div> 
+            
+            <table style="width: 100%; font-size: 12px;">
+                <tbody> 
+                <tr>
+                   <th  colspan="1" style="width: 1px;">S.N</th> 
+                   <th colspan="5">Description</th>
+                    <th colspan="4">List</th>
+                </tr>
+                 <tr>
+                   <th  colspan="1" style="width: 1px;">1</th> 
+                   <th  colspan="5">Price Schedule </th>
+                   <th  colspan="4">Annexure-I</th>
+                </tr>
+                 <tr>
+                   <th  colspan="1" style="width: 1px;"> 2</th> 
+                   <th  colspan="5">Terms & Conditionsn</th>
+                    <th colspan="4">Annexure-II</th>
+                </tr>
+                 <tr>
+                   <th  colspan="1" style="width: 1px;">3</th> 
+                   <th  colspan="5">Technical Specification or Parameters </th>
+                    <th  colspan="4">Annexure-III</th>
+                </tr>
+                </tbody>
+                </table>
+                
+                <div class="text3"><br>
+                    <p> <font size="3"><b><u>Price Schedule:</u></b></font></p><br>
+                    <p> <font size="2">Our price for the total package consists of as bellow. All equipment shall be as per given specification in</font></p><br>
+                    <p style="text-align: center;"> <font size="3"><b>Annexure-I</b></font></p>
+                </div>
+                
+            <table style="width: 100%;">
+             
+             <tr style="height: 25px; font-size: 12px;">
+                    <th  width="1%" colspan="1">S.N</th>
+                    <th  width="1%" colspan="1">Item code</th>
+                    <th width="25%" colspan="1">Particulars</th>
+                     <th>HSN/SAC</th>
+                    <th width="10%" colspan="4">Quantity</th>
+                    <th width="15%" colspan="3">Rate</th>
+                    <th  width="15%" colspan="1">Discount Amount</th>
+                    <th width="20%" colspan="3">Amount</th>
+                </tr>
+                {%- for row in doc.items -%}
+                <tr style=" vertical-align: text-top; font-size: 12px;">
+                    <th width="1%" colspan="1">{{ row.idx }}</th>
+                    <th width="1%" colspan="1">{{ row.item_code }}</th>
+                    <th width="25%" colspan="1">{{ row.item_name }}</th>
+                    <th style="width: 7%;">{{ row.gst_hsn_code }}</th>
+                    <th width="10%" colspan="4">{{ row.qty }} {{ row.uom or row.stock_uom }}</th>
+                    <th width="15%" colspan="3">{{ row.get_formatted("rate", doc) }}</th>
+                    <th width="15%" colspan="1">{{ row.get_formatted("discount_amount", doc) }}</th>
+                    <th width="20%" colspan="3">{{ row.get_formatted("amount", doc) }}</th>
+                </tr>
+                {%- endfor -%}
+             </table>
+             <table style="width:100%; border-bottom: hidden;" >
+            <tr>
+               
+                <th width="23%" style="text-align:left; border-right: hidden; font-size: 12px;">Total Quantity</th> 
+                <th width="30%" style="text-align:right; font-size: 12px;">{{ doc.total_qty }}</th> 
+                <td width="28%" style="text-align:left; font-size: 12px;"><b>Total</b></td>
+                <td width="24%" style="text-align:center; font-size: 12px;"><font size = "2"><b>{{ doc.currency}} {{ doc.total }}</b></font></td>
+            </tr>
+        </table>
+         
+         <table style="width:100%; border-bottom: hidden;">
+            <tr>
+            {%- for row in doc.taxes -%}
+                <th width="53%" style="text-align:left; "></th>
+                <td width="28%" font size = "2" style="text-align:left; font-size: 12px;"><b>{{row.get_formatted("account_head", doc) }}</b></td>
+                <td width="24%" style="text-align:center;"><font size = "2"><b>{{row.get_formatted("tax_amount", doc) }}</b></font></td>
+            </tr>
+            {%- endfor -%}
+        </table>
+            <table style="width:100%; border-bottom: hidden;">
+            <tr> 
+                <th width="75%" style="text-align:left; border-left: solid black 1px; border-right: hidden; font-size: 12px;"> <strong>Grand Total </strong></th>
+                <td  width="25%" style="text-align:center;"><font size = "2"><b> {{ doc.currency}} {{ doc.rounded_total}}</b></font></td>
+            </tr>
+             </table>
+         <table style="width:100%;">
+            <tr>
+                <th width="30%" style="text-align:left; border-left: solid black 1px; border-right: hidden; font-size: 12px;"> <strong>In Words </strong></th>
+                <td width="70%" style="text-align:right;"><font size = "2"><b>{{ doc.in_words}}</b></font></td>
+            </tr>
+            </table>
+           
+           <div class="page-break"> </div>
+           
+          
+           <div>
+                <p><font size ="3"><b>Annexure – II</b></font></p><br>
+                <p><font size = "2">{{ doc.terms }}</font></p>
+           
+            </div>
+            
+ <div class="page-break"> </div>
+ 
+            
+            <div>
+                 {%- for row in doc.items -%}
+                <p><font size ="3"><b>Annexure – III</b></font></p><br>
+                <div class="center" style="margin-left: auto; margin-right: auto; width:50%"> 
+                 <img src="{{ row.image }}"/>
+                 </div><br>
+                 <p><font size="2">{{ row.description }}</font></p>
+                  {%- endfor -%}
+            </div>   
+          
+          
+          
+          
+         <div id="footer-html">
+           {% if letter_head %}
+           <img src="/files/new footer.png" style="width: 100%; height: 150px;">
+           {% else %}
+           {% endif %}
+            <center><p style="font-size: 8pt !important;">{{ _("Page") }} <span class="page"></span> {{ _("of") }} <span class="topage"></span></p></center>
+        </div>
+   
+</body>
+</html>
+                

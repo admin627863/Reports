@@ -1,0 +1,14 @@
+This can help you:
+
+Option 1: Install in the virtual environment
+
+sudo ./env/bin/pip install pandas
+Option 2: Activate virtual environment from frappe-bench
+
+source env/bin/activate
+and
+
+pip install pandas
+To return
+
+deactivate

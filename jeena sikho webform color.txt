@@ -1,0 +1,10 @@
+Frappebench/appa/erpnext/erpnext/hr/webforms/job application
+
+templates/includes/breadcrumbs.html
+
+/home/frappe/frappe-bench/apps/frappe/frappe/templates
+
+/home/frappe/frappe-bench/sites/assets/css
+
+
+#3b664a

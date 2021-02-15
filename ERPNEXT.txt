@@ -1,0 +1,178 @@
+134.209.158.220 springhouse
+206.189.129.70 GCIT
+157.245.105.122 Magnusopto
+139.59.29.241 core.extensionerp.com
+139.59.93.245 demo.extensionceramics,
+165.22.221.0 ankita
+159.65.153.126 Sharp
+128.199.16.48 test
+139.59.92.194 aeon system
+
+*Add new fields/submodules in erp
+cd frappe-bench/apps/erpnext/erpnext/config
+sudo nano selling.py
+add doctype and save
+
+ERPNext Local SetUp
+
+Install ERPNext in local
+https://github.com/frappe/bench#easy-install-script
+Type in putty
+1. sudo apt-get update
+2. sudo apt-get upgrade 
+3. sudo adduser frappe 
+4. sudo usermod -aG sudo frappe 
+5. sudo nano /etc/resolv.conf 
+6. sudo apt-get install python-minimal
+7.sudo apt-get install build-essential python-setuptools 
+8. wget https://github.com/frappe/bench/blob/master/playbooks/install.py 
+9. sudo python3install.py --production --user frappe
+
+bench --site site1.local backup --with-files
+
+bench --site [sitename] --force restore /path/to/SQLFILE
+bench --site [sitename] migrate
+
+bench clear-cache
+bench clear-website-cache
+sudo service nginx restart
+sudo supervisorctl restart all
+bench restart  
+
+
+Changes in your ip browser:
+
+For login page:
+* Background color change :
+ /home/frappe/frappe-bench/sites/assets/css inside this path desk.min.css need to change/add to background color.
+
+* Top header remove: 
+/home/frappe/frappe-bench/sites/assets/css inside this path frappe-web-b4-css need to change/add inside the display:total-column. And color change.
+
+* Logo and favicon change:
+ /home/frappe/frappe-bench/apps/erpnext/erpnext/public/images
+ 
+* For footer change:
+/home/frappe/frappe-bench/apps/frappe/frappe/templates/includes/footer
+
+or
+
+/home/frappe/frappe-bench/apps/erpnext/erpnext/templates/includes/footer
+(
+<a href="https://extensionerp.com/" target="_blank" class="text-muted">Powered by Extension Technologies  - {{ '' if domains else '' }}Simplify Your Business {{ ('for ' + domains[0].domain + ' Companies') if domains else '' }}</a>  
+)
+
+
+*footer link color
+ /home/frappe/frappe-bench/sites/assets/css in frappe-web-b4.css (test-muted={ color:" "})
+
+
+* Home page :
+Background color change : /home/frappe/frappe-bench/sites/assets/css inside this path desk.min.css need to change/add to background color.
+
+*front login css
+/home/frappe/frappe-bench/apps/frappe/frappe/templates/includes/login
+
+
+*login html page
+/home/frappe/frappe-bench/apps/frappe/frappe/www in login.html
+
+*footer html path
+/home/frappe/frappe-bench/apps/frappe/frappe/templates/includes/footer/footer.html
+
+
+
+For link change:  inside the putty
+* su frappe
+* cd
+* cd frappe-bench
+* ls
+* cd apps
+* ls
+* cd erpnext/erpnext
+* ls 
+* cd public
+* ls 
+* cd js
+* sudo nano conf.js
+* Enter password
+* Then you can change the link then 
+* Click crt+o
+* Ctrl+x
+* cd
+* cd frappe-bench
+* bench restart
+* bench migrate
+
+For change:
+bench build
+bench migrate
+bench restart
+
+For website secure:
+
+* bench setup add-domain ankita.extensionceramics.com --site site1.local
+* bench config dns_multitenant on
+* bench setup nginx
+* sudo service nginx restart
+* bench setup add-domain ankita.extensionceramics.com
+* sudo -H bench setup lets-encrypt ankita.extensionceramics.com
+
+* sudo bench renew-lets-encrypt
+* sudo service nginx stop
+* sudo service nginx reload
+
+Site: site1.local
+
+
+
+
+FOR WEBSITE SECURE
+*su frappe
+*cd 
+
+bench config dns_multitenant on
+bench setup add-domain core.extensionerp.com --site site1.local
+bench setup nginx
+sudo service nginx restart
+sudo -H bench setup lets-encrypt site1.local --custom-domain core.extensionerp.com
+bench setup nginx
+sudo service nginx start
+bench restart
+
+
+change Email footer:-
+*Go to search
+  type : system settings
+*select email option below  
+    *Add your own footer in Email Footer Address(Extension Technologies<br><a href="https://extensionerp.com/"> sent via Extension ERP</a>)
+    *trick in 1)Disable Standard Email Footer
+              2) Hide footer in auto email reports
+
+
+
+Create email account in erpnext
+*Go to search
+ type:New Email Account 
+ (create a new email or existing email and
+   on less secruity in your email setting app)
+ *add email ,password , name, add service , tick outgoing 
+ *then save
+
+desk iframe
+/home/frappe/frappe-bench/apps/frappe/frappe/www in desk.html
+
+
+
+show email in erpnext
+*Go to search ->System settings
+ type:Email queue list
+
+ 
+add make in india logo
+/home/frappe/frappe-bench/apps/frappe/frappe/templates/includes/navbar in navbar_login.html
+<a class="nav-link btn-login-area" href="/login">{{ _("<img src='https://photos.smugmug.com/photos/i-bWNH6DK/0/O/i-bWNH6DK.png' style='max-width: 110px;'>") }}</a>
+
+
+
+

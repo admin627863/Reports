@@ -1,0 +1,33 @@
+// frappe.ui.form.on('Item', {
+// 	validate(frm) {
+// cur_frm.doc.item_group_short + cur_frm.doc.item_sub_group_short
+// 	}
+// })
+cur_frm.cscript.custom_validate = function(doc) {
+    // clear item_code (name is from item_code)
+    doc.item_code = "";
+
+    // first 2 characters based on item_group
+    switch(doc.item_group) {
+        case "Raw Material":
+            doc.item_code = "RM";
+            break;
+        case "Test B":
+            doc.item_code = "TB";
+            break;
+        default:
+            doc.item_code = "XX";
+    }
+
+    // add next 2 characters based on brand
+    switch(doc.item_sub_group) {
+        case "Spices & condiments":
+            doc.item_code += "SNC";
+            break;
+        case "Brand B":
+            doc.item_code += "BB";
+            break;
+        default:
+            doc.item_code += "BX";
+    }
+}

@@ -1,0 +1,53 @@
+//  frappe.ui.form.on('Gate Entry', {
+//  	refresh(frm) {
+// cur_frm.add_fetch("supplier","address_html","address_display")
+//  	}
+//  })
+// frappe.ui.form.on("Gate Entry", "supplier", function(frm, cdt, cdn) {
+//     if(frm.doc.suppier){
+//     	return frm.call({
+//     		method: "frappe.contacts.doctype.address.address.get_address_display",
+//     		args: {
+//     			"address_dict": frm.doc.to_bill_address
+//     		},
+//     		callback: function(r) {
+//     			if(r.message)
+//     				frm.set_value("address_display", r.message);
+//     		}
+//     	});
+//     }
+//     else{
+//         frm.set_value("address_display", "");
+//     }
+// });
+//cur_frm.add_fetch("supplier","primary_address","address_display")
+frappe.ui.form.on("Gate Entry Details", "invoice_qty", function (frm, cdt, cdn) {
+    var total = 0;
+    $.each(frm.doc.items || [], function (i, d) {
+        total += flt(d.invoice_qty);
+    });
+    frm.set_value("total_inv_qty", total);
+});
+
+// frappe.ui.form.on('Gate Entry', {
+//   	purchase_order(frm) {
+// wn.model.with_doc("Purchase Order", cur_frm.doc.purchase_order, function() {
+//   $.each(wn.model.get("Purchase Order Item", {"parent":doc.purchase_order}, function(i, po_item) { 
+//       d = wn.model.add_child(cur_frm.doc, "Gate Entry Details", "items");
+//       d.item_code = po_item.item_code;
+//       d.item_name = po_item.item_name;
+//       }))
+//   cur_frm.refresh()
+//  })
+//   	}
+// });
+cur_frm.fields_dict.purchase_order.get_query = function(doc) {
+	return {
+		filters: {
+			supplier: doc.supplier,
+			company:doc.company,
+			docstatus:1,
+			per_received: ["<", 99.99]
+		}
+	}
+}

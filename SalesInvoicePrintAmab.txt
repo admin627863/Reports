@@ -1,0 +1,547 @@
+{% macro above_items() %}
+<div class="page-break">
+        <div class="header">
+             <div >
+                  {{ letter_head }}
+                </div>
+                {%- if doc.meta.is_submittable and doc.docstatus==0-%}
+    <div class="alert alert-info text-center">
+    <h5 style="margin: 0px;">{{ _(" Invoice  ") }}</h5></div>
+    {%- endif -%}
+                <div style="width: 100%;display: inline-block;border: 1px solid black;border-bottom: 0px;">
+                    <div style="width: 75%;text-align:center;display: inline-block;padding-left: 24%;">
+                        <!--<div class="col-md-9">{{ frappe.db.get_value("sales order", "sales_order"),doc.sales_order }}</div> -->
+                        <p style="font-size: 15px;">{% if doc.is_return == 1 -%}Sales Return(Credit Note) {% else %} TAX INVOICE	{%- endif %}</p>
+                        </div>
+                    
+                </div>
+               
+                <table border=1 width="100%">
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0px 6px 0px 6px !important;line-height: 14px;font-weight: 700;" colspan=1 width="160">
+                                <div>
+                                    <font size="1">Invoice No</font>
+                                </div>
+                                <div>
+                                    <font size="1">Invoice Date</font>
+                                </div>
+                                <div>
+                                    <font size="1">Customer PO</font>
+                                </div>
+                                <div>
+                                    <font size="1">Customer PO Date</font>
+                                </div>
+                                 <div>
+                                    <font size="1">Date of Supply</font>
+                                </div>
+                                <div>
+                                    <font size="1">Place of Supply</font>
+                                </div>
+                            </td>
+                            <td style="padding: 0px 6px 0px 6px !important;line-height: 14px;font-weight: 700;" colspan=1 width="200">
+                                <div>
+                                    <font size="1">
+                                        <b>: {% if doc.is_return == 1 -%}{{ doc.name.split("-")[:3]|join("-") }} {% else %} {{ doc.name.split("-")[:2]|join("-") }}
+				{%- endif %}</b>
+                                    </font>
+                                </div>
+                                <div>
+                                    <font size="1">
+                                        <b>: {{ doc.get_formatted("posting_date") }}</b>
+                                    </font>
+                                </div>
+                                <div>
+                                    <font size="1">
+                                        <b>: {%- if doc.po_no!= none -%}. {{ doc.po_no }} {%- endif -%}</b>
+                                    </font>
+                                </div>
+                                <div>
+                                    <font size="1">
+                                        <b>: {{ doc.get_formatted("po_date") }}</b>
+                                    </font>
+                                </div>
+                                 <div>
+                                    <font size="1">
+                                        <b>: {{ doc.get_formatted("posting_date") }}</b>
+                                    </font>
+                                </div>
+                                <div>
+                                    <font size="1">
+                                        <b>: {%- if doc.place_of_supply!= none -%}.{{ doc.place_of_supply }}{%- endif -%}</b>
+                                    </font>
+                                </div>
+                            </td>
+                            <td style="padding: 0px 6px 0px 6px !important;line-height: 14px;font-weight: 700;" colspan=1 width="160">
+                                <div>
+                                    <font size="1">Transportation Mode</font>
+                                </div>
+                                <div>
+                                    <font size="1">Transporter</font>
+                                </div>
+                                 <div>
+                                    <font size="1">Vehicle No</font>
+                                </div>
+                                <div>
+                                    <font size="1">Eway Bill No</font>
+                                </div>
+                                <div>
+                                    <font size="1">LR No</font>
+                                </div>
+                            </td>
+                            <td style="padding: 0px 6px 0px 6px !important;line-height: 14px;font-weight: 700;" colspan=1 width="200">
+                                <div>
+                                    <font size="1">
+                                        <b> :{%- if doc.mode_of_transport!= none -%} .{{ doc.mode_of_transport }} {%- endif -%} </b>
+                                    </font>
+                                </div>
+                                  <div>
+                                    <font size="1">
+                                        <b> : {%- if doc.transporter!= none -%} .{{ doc.transporter }} {%- endif -%} </b>
+                                    </font>
+                                </div>
+                                <div>
+                                    <font size="1">
+                                        <b> : {%- if doc.vehicle_no!= none -%} .{{ doc.vehicle_no }} {%- endif -%} </b>
+                                    </font>
+                                </div>
+                                <div>
+                                    <font size="1">
+                                       <b>: {%- if doc.ewaybill!= none -%}.{{ doc.ewaybill }}{%- endif -%}</b>
+                                    </font>
+                                </div>
+                                <div>
+                                    <font size="1">
+                                        <b>: {%- if doc.lr_no!= none -%}{{ doc.lr_no }}{%- endif -%}</b>
+                                    </font>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="seller-info new-seller-info">
+                <table border=1 style="width:100%;" style="border-top: 0px;">
+                    <tbody>
+                        <tr>
+                            <td style=" padding: 0px 6px 0px 6px !important;" width="200" colspan=2>
+                                <div style="font-weight:bold;font-size:10px;text-decoration:underline;">Details of Receiver (Billed To)</div>
+                                <div>
+                                    <b>
+                                        <font size="1"><b>{{ doc.customer_name }}</b></font>
+                                    </b>
+                                </div>
+                                {% set customer_address = doc.address_display  %}
+                                <div>
+                                    <font size="1"> {{ customer_address }} </font>
+                                </div>
+                            </td>
+                            <td style=" padding: 0px 6px 0px 6px !important;" width="200" colspan=2>
+                                <div style="font-weight:bold;font-size:10px;text-decoration:underline;">Details of Cosignee(Shipped To)</div>
+                                
+                             <div> <font size="1">{%- if doc.shipping_address!= none -%}{{doc.shipping_address}} {%- endif -%}</font></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+    {% endmacro %} {% macro below_items() %}
+    
+       <div style="font-size: 10px">
+	
+            <div class="footer">
+                <table width="100%" border="1" style="font-size:8px;">
+                    <tbody>
+                        <tr>
+                            <td width="70%" text-align="left" style="font-size:8px;">
+                                
+                                <p style="text-align: left; font-size:8px;">TERMS &amp; CONDITIONS :</p>
+                                <p style="text-align: left;">● Interest will be recovered @ 24% p.a. on overdue unpaid bills.
+                                </p>
+                                <p style="text-align: left;">● Claim of any nature whatsoever will lapse unless raised in writing within 3 days from date
+                                    of Invoice.
+                                </p>
+                                <p style="text-align: left;">● Goods once sold cannot be returned and / or exchanged.
+                                </p>
+                                <p style="text-align: left;">● We reserve to ourselves the right to demand payment of this Invoice at any time before due
+                                    date.
+                                </p>
+                                <p style="text-align: left;">● Payment are to be made at our office by A/c. Payee's Cheque.
+                                </p>
+                                <p style="text-align: left;">● All Cheque drawn in favor of BANK 
+                                </p>
+                                <p style="text-align: left;"> {%- if doc.company == "Amab Clothing Pvt Ltd" -%} ● Subject To Howrah Jurisdiction{% else %}● Subject To Bengaluru Jurisdiction{%- endif -%} 
+                                </p>
+                            </td>
+                            <td>
+                                <br></br><br><br>
+                                
+                                <p style="text-align: center; font-size:8px;"><br></br><br><br>
+                                    <b>RECEIVED & FOUND SATISFACTORY
+                                    </b>
+                                </p>
+                            </td>
+                            <b>
+                                <td width="30%" text-align="right" style="font-size:8px;">
+                                    <p style="text-align: center;">
+                                        <b>For {{ doc.company }}
+                                            <br></br><br><br>
+                                            
+                                            <br><br><br>
+                                            </br>Partner
+                                    </p>
+                                </td>
+                            </b>
+                        </tr>
+                    </tbody>
+                </table>
+    
+            </div>
+    <div id="footer-html" class="visible-pdf">
+                <p class="text-center small page-number visible-pdf">
+                    {{ _("Page {0} of {1}").format('
+                    <span class="page"></span>', '
+                    <span class="topage"></span>') }}
+                </p>
+            </div>
+           
+        </div>
+
+</div>
+
+{% endmacro %}
+
+             {{ above_items() }} 
+    <div class="row">
+        <div class="col-xs-12">
+            <table border=1 ; width="100%" rules="cols" style="border-top: none;">
+                <tbody>
+                    <tr style="border-bottom:1px solid black;">
+                        <th rowspan="1">
+                            <font style="font-size: 8px;">Sr</font>
+                        </th>
+                        <th rowspan="1">
+                            <font style="font-size: 7px;">Description of Goods</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 8px;">HSN
+                                <br>ASN</font>	
+                        </th>
+                         <th rowspan="1" class="text-center">
+                            <font style="font-size: 8px;">GST Rate </font>	
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 8px;">UOM</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 8px; ">Qty</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 8px;">Rate</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 8px;">Amount</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 8px;">Taxable Value</font>
+                        </th>
+                                           </tr>
+                    {% set cgst_rate = [] -%} {% set sgst_rate = [] -%} {% set igst_rate = [] -%} {% set cgst_account_head = [] -%} {% set sgst_account_head
+                    = [] -%} {% set igst_account_head = [] -%} {% set tot_cgst_amount = [] %} {% set tot_sgst_amount = []
+                    %} {% set grand_total = {"qty":0.0, "amount":0.0, "cgst_amt":0.0, "sgst_amt":0.0, "igst_amt":0.0} %}
+                    {%- for row in doc.taxes -%} {% if 'CGST' in row.account_head -%} {% set _ = cgst_account_head.append(row.account_head)
+                    %} {% set _ = cgst_rate.append(row.rate) %} {%- endif -%} {% if 'SGST' in row.account_head -%} {% set
+                    _ = sgst_account_head.append(row.account_head) %} {% set _ = sgst_rate.append(row.rate) %} {%- endif
+                    -%} {% if 'IGST' in row.account_head -%} {% set _ = igst_account_head.append(row.account_head) %} {%
+                    set _ = igst_rate.append(row.rate) %} {%- endif -%} {%- endfor -%} {%- for row in doc.items -%} {% if
+                    row.idx % 8 == 0 %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    
+    <div id="footer-html" >
+    {{ below_items() }}
+     </div>
+    
+
+     {{ above_items() }}
+    
+    <div class="row">
+        <div class="col-xs-12">
+            <table border=1 ; width="100%" rules="cols" style="border-top: none;">
+                <tbody>
+                    <tr style="border-bottom:1px solid black;">
+                        <th rowspan="1">
+                            <font style="font-size: 6px;">Sr</font>
+                        </th>
+                        <th rowspan="1">
+                            <font style="font-size: 6px;">Description of Goods</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 6px;">HSN
+                                <br>ASN</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 6px;">GST Rate</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 6px;">UOM</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 6px; ">Qty</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 6px;">Rate</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 6px;">Amount</font>
+                        </th>
+                        <th rowspan="1" class="text-center">
+                            <font style="font-size: 6px;">Taxable Value</font>
+                        </th>
+                       
+                    {% endif %}
+                    <tr>
+                        {% set cgst_amt = [] -%} {% set sgst_amt = [] -%} {% set igst_amt = [] -%} {% set it_cgst_rate = [] -%} {% set it_sgst_rate
+                        = [] -%} {% set it_igst_rate = [] -%} {% set rate_found_item = 0 -%} {%- set item_record = frappe.get_doc("Item",
+                        row.item_code) -%} {% for item_tax in item_record.taxes %} {% if item_tax.tax_type in sgst_account_head
+                        %} {% set _ = it_sgst_rate.append(item_tax.tax_rate) %} {% set _ = sgst_amt.append(row.amount * it_sgst_rate[0]
+                        / 100) -%} {% set rate_found_item = 1 -%} {% endif %} {% if item_tax.tax_type in igst_account_head
+                        %} {% set _ = it_igst_rate.append(item_tax.tax_rate) %} {% set _ = igst_amt.append(row.amount * it_igst_rate[0]
+                        / 100) -%} {% set rate_found_item = 1 -%} {% endif %} {% if item_tax.tax_type in cgst_account_head
+                        %} {% set _ = it_cgst_rate.append(item_tax.tax_rate) %} {% set _ = cgst_amt.append(row.amount * it_cgst_rate[0]
+                        / 100) -%} {% set rate_found_item = 1 -%} {% endif %} {% endfor %} {% if rate_found_item == 0 %}
+                        {% if cgst_rate[0] -%} {% set _ = cgst_amt.append((row.amount * cgst_rate[0])/100) -%} {% set _=
+                        it_cgst_rate.append(cgst_rate[0]) -%} {% set rate_found_inv = 1 -%} {%- endif -%} {% if sgst_rate[0]
+                        -%} {% set _ = sgst_amt.append((row.amount * sgst_rate[0])/100) -%} {% set _= it_sgst_rate.append(cgst_rate[0])
+                        -%} {% set rate_found_inv = 1 -%} {%- endif -%} {% if igst_rate[0] -%} {% set _ = igst_amt.append((row.amount
+                        * igst_rate[0])/100) -%} {% set _= it_igst_rate.append(igst_rate[0]) -%} {% set rate_found_inv =
+                        1 -%} {%- endif -%} {% endif %} {% if not it_cgst_rate[0] %} {% set _ = it_cgst_rate.append(0) %}
+                        {% set _ = cgst_amt.append(0) %} {% endif %} {% if not it_sgst_rate[0] %} {% set _ = it_sgst_rate.append(0)
+                        %} {% set _ = sgst_amt.append(0) %} {% endif %} {% if not it_igst_rate[0] %} {% set _ = it_igst_rate.append(0)
+                        %} {% set _ = igst_amt.append(0) %} {% endif %} {% set temp_cgst_amt = grand_total["cgst_amt"] +
+                        cgst_amt[0] %} {% set temp_sgst_amt = grand_total["sgst_amt"] + sgst_amt[0] %} {% set temp_igst_amt
+                        = grand_total["igst_amt"] + igst_amt[0] %} {% set temp_qty = grand_total["qty"] + row.qty %} {% set
+                        temp_amount = grand_total["amount"] + row.amount %} {% set temp_item_taxable_amount = row.amount
+                        %} {% set check = grand_total.update({"qty": temp_qty, "amount": temp_amount, "cgst_amt":temp_cgst_amt,
+                        "sgst_amt":temp_sgst_amt, "igst_amt":temp_igst_amt}) %}
+                        <td style="width: 1%;">
+                            <font size="1">{{ row.idx }}</font>
+                        </td>
+                        <td style="width: 40%;">
+                            <font size="2" style="font-size:8px;">
+                                {{ row.item_code }}-{{ row.item_name }}
+                            </font>
+                        </td>
+                        <td style="width: 9%;">
+                            <font size="2" style="font-size:8px;">{%- if row.gst_hsn_code!= none -%}{{ row.gst_hsn_code }} {%- endif -%}</font>
+                        </td>
+                        <td style="width: 12%;">
+                            <font size="2" style="font-size:8px;">{%- if row.item_tax_template!= none -%}{{ row.item_tax_template }} {%- endif -%}</font>
+                        </td>
+                        <td style="width: 4%; text-align: left;">
+                            <font size="2" style="font-size:8px;">{{ row.uom or row.stock_uom }}</td>
+                        <td style="width: 6%; text-align: left;">
+                            <font size="2" style="font-size:8px;">{{ row.qty }} </font>
+                        </td>
+                        <td style="width: 8%; text-align: right;">
+                            <font size="2" style="font-size:8px;">{{"{:,.2f}".format(row.rate) }}</font>
+                        </td>
+                        <td style="width: 10%; text-align: right;">
+                            <font size="2" style="font-size:8px;">{{"{:,.2f}".format(row.amount) }}</font>
+                        </td>
+                        <td style="width: 10%; text-align: right;">
+                            <font size="2" style="font-size:8px;">{{"{:,.2f}".format(row.net_amount) }}</font>
+                        </td>
+                        
+                    </tr>
+                    {%- endfor -%} {% set row_count_threshold = 14 - doc.items|length -%} {% for i in range(row_count_threshold) %}
+                    <tr>
+                       <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                       
+                  
+                    </tr>
+                    {%- endfor -%}
+                    <tr style="border-top:1px solid black;">
+                        <td style="width: 60%;" colspan=3>
+                            <font size="1" style="font-size:9px;">Total</font>
+                        </td>
+                        <td style="width: 5%;">
+                            <font size="1"></font>
+                        </td>
+                         <td style="width: 5%;">
+                            <font size="1"></font>
+                        </td>
+                        <td style="width: 5%; text-align: left;">
+                            <font size="1" style="font-size:9px;">{{ grand_total["qty"] }}</font>
+                        </td>
+                        <td style="width: 5%; text-align: right;">
+                            <font size="1"></font>
+                        </td>
+                        
+                        <td style="width: 10%; text-align: right;">
+                            <font size="1" style="font-size:9px;">{{ "{:,.2f}".format(grand_total["amount"]) }}</font>
+                        </td>
+                      <td style="width: 5%; text-align: right;">
+                            <font size="1"></font>
+                        </td>    
+                    </tr>
+               </tbody>
+            </table>
+            <!--<p style="text-align:center;">************* Nothing Follows*************</p>-->
+<!--{{frappe.db.get_value("sales order", Series, "naming_series")}}-->
+
+
+        </div>
+	
+    </div>
+   
+<table width="100%" border="1" style="font-size:9px;border-bottom:0px;">
+            <tbody>
+                <tr>
+                    <td width="56%" text-align="left">
+                        
+                         <p><b>INVOCE TOTAL SUMMARY</b></p> 
+<table border = 1; width = "300">
+	<tbody>
+                 
+		
+			<th><font size = "1">Tax Rate</font></th>
+                        <th class="text-right"><font size = "1">Total Qty</font></th>
+			<th class="text-right"><font size = "1">Taxable Value</font></th>
+							
+                      </font>
+		</tr>
+
+ 
+{% set list = [] %}
+     {% set dict = {} %}
+    {% set tot_qty = [] %}
+    {% set tax_amt = [] %}
+    {% set tot_amt = 0 %}
+    {% set grand_total = {"qty":0.0, "amount":0.0} %} 
+    {% set groups = doc.items|groupby('item_tax_template') %}
+    {% set no_of_group = groups|length %}
+    {% set total_count = 0 %}
+  
+{% set group_count = 0 %}
+    {% set tot_inv_qty = doc.items|sum(attribute='qty') %}
+ 
+    {% set item_details = {"total_qty":0.0} %}	
+
+    {% for group in doc.items | groupby('item_tax_template') %}
+        {% set group_count = group.list|length %}
+    {% set total_count = total_count + group_count %}
+    {% set count = 1 %} 
+         {% set item_desc = [] %} 
+{% set mrp = [] %} 
+{% set rate = 0 %} 
+{% set gstin = [] %}
+               {% for item in group.list %}
+                   
+		  {% if count == 1 -%}
+  {% set _ = item_desc.append(item.item_tax_template) %}
+		{% set _ = gstin.append(item.gst_hsn_code) %}   
+{% set _ = mrp.append(item.rate) %} 
+ 		     {% set _ = item_desc.append(item.item_tax_template) %}
+    {% set _ = item.item_tax_template %}
+
+                     {%- endif %}
+                      {% set count = count + 1 %}
+                		{% set temp_qty = grand_total["qty"] + item.qty %}
+		{% set temp_amount = grand_total["amount"] + item.net_amount %} 
+{% set check = grand_total.update({"qty": temp_qty, "amount": temp_amount}) %}
+		{%- endfor %}
+                   
+           	 <tr>
+           <div class="row" style="padding-top:0px;" !important;"> 
+ <td style="width: 10%; text-align: left;"><font size = "1">{{ item_desc[0] }}<font></td></div>
+                 
+{% set tot_qty = group.list|sum(attribute='qty') %}
+{% set grand_tot_qty = tot_qty %}
+		{% set tot_amt = group.list|sum(attribute='net_amount') %}
+	       {% set tax_amt = 0 %}
+{% set tot_mrp = group.list|sum(attribute='amount')%}
+
+		   <td style="width: 20%; text-align: right;"><font size = "1">{{ (tot_qty | round(2)|string).rstrip('0').rstrip('.') }}</font></td>
+   <td style="width: 25%; text-align: right;"><font size = "1">{{ "{:,.2f}".format(tot_amt) }}</font></td>
+ 
+        </tr>{%- endfor %}
+<tr>
+
+			<td style="width: 15%;"><font size = "1"><b>
+				Total</b></font></td>
+					<td style="width: 8%; text-align: right;"><font size = "1"><b> {{ grand_total["qty"] }} </b></font></td>
+<td style="width: 10%; text-align: right;"><font size = "1"><b>
+{{"{:,.2f}".format(grand_total["amount"])}}</b></font></td>
+		
+</tr>
+
+</tbody>
+</table>
+ <p style="text-align: left;"><b>Bank Details </b>{%- if doc.company == "Amab Clothing Pvt Ltd" -%} <b>ICICI Bank,</b> BERABERIA, SANJAYNAGAR,VILL AND POST BEGNAN,HOWRAH-560094,KARNATAKA<BR> <b>A/cNo:233605000533 IFSC CODE : ICIC0002336 {% else %} ICICI,</b>Branch Sanjay Nagar,CIL Layout,Sanjay Nagar Road Bengaluru-560 094,Karnataka.<br> <b>A/cNo:233605000533 IFSC CODE : ICIC0002336</b>{%- endif -%} 
+                        </p>                         
+                        
+                    </td>
+                    <td style="padding: 0px !important;">
+                        <table width="100%" border="0">
+                            <tbody>
+                                <tr style="text-align: right; border-bottom:1px solid">
+                                    <td>
+                                        <b>Total Amount Before Tax</b>
+                                    </td>
+                                    <td style="width:35%;text-align: right; border-left:1px solid;">{{"{:,.2f}".format(doc.net_total) }}</td>
+                                </tr>
+            {%- for row in doc.taxes -%}
+             {%- if row.tax_amount != 0 -%}
+	  	 		  <tr>
+			<tr style="text-align: right; border-bottom:1px solid">
+            <td>
+				<b>{{ row.description }}</b>
+			</td>
+			<td style="width:35%;text-align: right; border-left:1px solid;">
+				{{ row.get_formatted("tax_amount", doc) }}
+			</td>
+		 </tr>{%- endif -%}
+					{%- endfor -%}
+					<tr style="text-align: right; border-bottom:1px solid">
+                                    <td>
+                                        <b>Total Taxes & charges</b>
+                                    </td>
+                                    <td style="width:35%;text-align: right; border-left:1px solid;">{{"{:,.2f}".format(doc.total_taxes_and_charges) }}</td>
+                                </tr>
+                                    
+                               <tr style="text-align: right; border-bottom:1px solid">
+                                    <td>
+                                        <b>Total Amount After Tax</b>
+                                    </td>
+                                    <td style="width:35%;text-align: right;border-left:1px solid;">{{"{:,.2f}".format(doc.rounded_total) }}</td>
+                                </tr>
+                             
+                      
+                            </tbody>
+                        </table> <b>Total Amount in Words:</b>{{doc.in_words}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+     
+ 
+
+
+<div id="footer-html">
+    {{ below_items() }}
+     
+</div>
+

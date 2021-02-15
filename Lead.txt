@@ -1,0 +1,10 @@
+frappe.ui.form.on('Lead', {
+	call(frm) {
+		frappe.call({
+			method: "erpnext.crm.doctype.lead.lead.call",
+			args: {"agent_id":frm.doc.agent_id,"phone":frm.doc.phone}
+	
+				});
+		
+	}
+})

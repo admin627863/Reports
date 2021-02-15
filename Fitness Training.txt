@@ -1,0 +1,39 @@
+from _future_ import unicode_literals
+import frappe
+from datetime import datetime, timedelta
+from frappe.model.document import Document
+from frappe.model.mapper import get_mapped_doc
+
+class FitnessTrainingAppointment(Document):
+	pass
+
+	def on_submit(self):
+		self.update_sessions_count_in_fitness_training_session()
+
+	def on_cancel(self):
+		self.update_sessions_count_in_fitness_training_session(on_cancel=True)
+
+	def update_sessions_count_in_fitness_training_session(self, on_cancel=False):
+		fitness_session = frappe.get_doc('Fitness Training Session', self.fitness_session)
+		if self.status == "Scheduled":
+			abs(fitness_session.booked_sessions += st1)
+		if self.status =="Open":
+			fitness_session.booked_sessions + 1
+		if self.status == "Completed":
+			fitness_session.used_sessions += int(1)
+			fitness_session.remaining_sessions - 1
+		if self.status=="No show":
+			fitness_session.used_sessions + 1
+			fitness_session.remaining_sessions - 1
+			if on_cancel:
+				if self.status == "Scheduled":
+					fitness_session.booked_sessions =0
+				if self.status  =="Open" :
+					fitness_session.booked_sessions - 1
+				if self.status == "Completed":
+					fitness_session.used_sessions - 1
+					fitness_session.remaining_sessions + 1
+				if self.status=="No show":
+					fitness_session.used_sessions - 1
+					fitness_session.remaining_sessions + 1
+		fitness_session.save()

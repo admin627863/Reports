@@ -1,0 +1,70 @@
+Dear sir.
+
+We are from sri varsha enterprises,Vijayawada,Andhra Pradesh,India & we are planning to take a ERP so i need to know the details about erpnext sir 
+actually we have three gst firms i.e three companies and i saw erpnext provides multiple companies logins.i have a query that is any coding skill related to erpnext accessing please let us know because  We dont have the skilled human resources,we just openup and entry our database into cloud that's it and 
+Will you provide the support regarding the issues anything happened and also the training modules of accessing erpnext
+
+Please share us the pricing for basic version 
+
+please let us know the details so that we can move forward to buy erpnext.Waiting for your reply
+
+You can contact me on 8908634567.
+
+Sravanthi
+
+Sri Varsha Enterprises
+Queries-REG
+
+---- On Mon, 07 Dec 2020 18:27:26 +0530 Yuvaraj R <yuvaraj.r@reward360.co> wrote ----
+
+Hi Team
+
+Good day!
+I am Yuvaraj from Reward360, a premier rewards and loyalty program management firm based out of Bangalore. We have 3 big financial institutions partner in India whom we provide our end-to-end services which includes fulfillment. We were using an inhouse simple application and now we are looking to migrate to ERPs that will support our scale. 
+We are looking for an ERP with smooth integration with our platforms and accounting software. We have also a private cloud hosting requirement. We can discuss this in detail. Please reach out to me for further discussions in detail.
+
+
+Thanks
+Yuvaraj
+8148977353
+
+
+Hi Michael and Team, 
+
+Greetings of the day!!
+
+Thank you for your valuable time for the meeting. Below are the Minutes from our meeting:
+
+Date of the meeting: 2nd December 2020
+
+Agenda of the meeting : ERPNext SOW 
+
+Minutes of the Meeting :
+Migration of existing business process from DeliveryBiz Pro to ERPNext
+Integration of Stripe Payment Gateway with ERPNext 
+Life cycle of process to capture the shelf life of individual products
+Complete supplier management regarding the delivery date, in-stock availability to the customers even if it will take a few days to reach the produce from supplier to the warehouse
+Inventory management for the delivery notes and automatic adjustments in the inventory at the final stage  
+Inventory tools and tracking within the warehouse as well as externally to have some safety stock always available
+Current and future stock forecasting regarding the LTV of the user for seasonal and non-seasonal products
+Subscription module for the products and customizations availability in the farm box with the price range
+Ongoing Cart and auto creation of the future carts, by our understanding means that the cart should already show the previous order to re-order the same products exactly as it shows in Amazon
+Sales Invoice update automations and charging them on a cadence 
+Creation of customized reports
+
+Next Steps: 
+Please let me know the available time to have another session to have a runthrough of your process which would be understanding the complete life cycle of sales process from buying in the cart to managing the customer deliveries in DeliveryBiz Pro software and receiving the products on the user end
+Also, as discussed you would be involving your front end website development team to discuss the scope of API integrations 
+
+Looking forward to a next session.
+
+Thank you
+
+
+hrithik@daffygroup.com
+Dear Team
+
+We have implemented ERP next and been using it for a year. Unfortunately have not been able to use all its features. So I am looking for the services that you offer in this regard.
+
+Thanks
+Hrithik

@@ -1,0 +1,9 @@
+frappe.ui.form.on('Employee', {
+	aadhar_card_number(frm) {
+		var pattern = /^([0-9]+(\s+)?(\-(\s+)?[0-9]+)*,*)+$/gm;
+        if (!pattern.test(frm.doc.aadhar_card_number))
+                {frm.doc.aadhar_card_number = '';
+			cur_frm.refresh_field('aadhar_card_number');
+			frappe.throw('Enter correct Aadhar Number');
+	}}
+})

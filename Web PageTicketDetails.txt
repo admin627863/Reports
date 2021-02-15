@@ -1,0 +1,92 @@
+function callme(){
+    // alert("Clicked");
+      frappe.call({
+			method: "erpnext.selling.doctype.fetch_estimation.fetch_estimation.getcustomer",
+	       callback: function(r) {
+            if (!r.exc) {
+                // console.log(r);
+                var body = document.getElementById("gettable");
+                var tbl = document.createElement("table");
+                var tblBody = document.createElement("tbody");
+                var firstrow=document.createElement("tr");
+                var cell1 = document.createElement("th");
+                var cellText1 = document.createTextNode("Customer Name");
+                cell1.appendChild(cellText1);
+                firstrow.append(cell1);
+                var cell2 = document.createElement("th");
+                var cellText2 = document.createTextNode("Ticket No");
+                cell2.appendChild(cellText2);
+                firstrow.append(cell2);
+                tblBody.appendChild(firstrow);
+                var cell3 = document.createElement("th");
+                var cellText3 = document.createTextNode("Status");
+                cell3.appendChild(cellText3);
+                firstrow.append(cell3);
+                tblBody.appendChild(firstrow);
+                var cell4 = document.createElement("th");
+                var cellText4 = document.createTextNode("Serial No");
+                cell4.appendChild(cellText4);
+                firstrow.append(cell4);
+                tblBody.appendChild(firstrow);
+                var cell4 = document.createElement("th");
+                var cellText4 = document.createTextNode("Issue Type");
+                cell4.appendChild(cellText4);
+                firstrow.append(cell4);
+                tblBody.appendChild(firstrow);
+                for (var i=(r.message.length)-1;i >180; i-- ){
+                    console.log(r.message[i]);
+                    var row = document.createElement("tr");
+                   for (var j = 0; j<=3 ; j++){
+                    var cell = document.createElement("td");
+                    if (j==0){
+                    var cellText = document.createTextNode(r.message[i]['customer']);
+                    }
+                    if (j==1){
+                    var cellText = document.createTextNode(r.message[i]['name']);
+                    // cellText.setAttribute("href","https://test.extensionceramics.com/issues?name="+r.message[i]['name']);
+                    }
+                    if (j==2){
+                    var cellText = document.createTextNode(r.message[i]['status']);
+                    }
+                    if (j==3){
+                    var cellText = document.createTextNode(r.message[i]['serial_no']);
+                    }
+                    if (j==4){
+                        if(r.message[i]['issue_type']==null){
+                    var cellText = document.createTextNode(r.message[i]['issue_type']);
+                        }
+                        else{
+                        var str=String(r.message[i]['issue_type']);
+                        var new1="";
+                        for (var a=0; a<str.length ; a++){
+                        if (str[a]=="<"){ 
+                        a=a+5;
+                        }
+                        if(str[a]==">"){
+                        break;
+                        }
+                        else{
+                        new1=new1+str[a];
+                            }
+                        }
+                        
+                    var cellText = document.createTextNode(new1);
+                        }
+                    }
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                }
+                tblBody.appendChild(row);
+                }
+                tbl.appendChild(tblBody);
+                body.appendChild(tbl);
+                tbl.setAttribute("border", "1");
+                tbl.setAttribute("id", "customers");
+            }
+        }
+				});
+    
+}
+$(document).ready(function(){
+    callme();
+});

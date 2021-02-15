@@ -1,0 +1,13 @@
+frappe.ui.form.on('Training Event', {
+	training_batch(frm) {
+		if (frm.doc.training_batch) {
+			return frm.call({
+				method: "get_attendence",
+				doc: frm.doc,
+				callback: function() {
+					refresh_field('employees');
+				}
+			});
+		}
+	}
+})

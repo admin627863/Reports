@@ -1,0 +1,57 @@
+<style>
+	.print-format table, .print-format tr, 
+	.print-format td, .print-format div, .print-format p {
+		font-family: Monospace;
+		line-height: 100%;
+		vertical-align: middle;
+	}
+	@media screen {
+		.print-format {
+			width:225px;
+			padding: 0.05in;
+			min-height: 135px;
+		}
+	}
+</style>
+<html>
+<!--<div class="dashboard-section">-->
+
+<body>
+  <!--<div class="barcodecss">-->
+    <div>
+        <div id="barcode-label" class="barcode-label" style="text-align:center;">
+      <b><p style="font-size:15px;" class="mb-4">Item Name:{{ doc.item_name }}</p></b>
+      </div>
+      
+      
+          <div>
+         <center><svg class="barcode"
+              jsbarcode-format="Code128"
+              
+              jsbarcode-value= {{ doc.name }}
+              
+              jsbarcode-textmargin="1"
+
+            >
+          </svg></center>
+       
+      </div>
+      <div class="text-center example">
+          
+                <b><p style="font-size:15px;margin:3px" class="mt-4">Serial No:{{ doc.serial_no}}</p></b>
+      </div></div>
+    
+  <!--</div>-->
+<!--</div>-->
+
+		
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+<script>
+
+JsBarcode(".barcode" , "Bigger text", {
+  fontSize: 12,margin: 0,displayValue: false,height:60,
+}).init();
+
+</script>
+</body>
+</html>

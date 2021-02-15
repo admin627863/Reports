@@ -1,0 +1,15 @@
+Try this code … this code is to generate a barcode by naming series and will put the barcode in the barcode table.
+
+frappe.ui.form.on('Item',
+{
+validate: function(frm) {
+if (!frm.is_new()){
+ if (frm.doc.barcodes.length==0){
+ frm.add_child("barcodes");
+ frm.fields_dict.barcodes.get_value()[0].barcode = frm.doc.name;
+cur_frm.save();
+}
+}
+},
+});
+

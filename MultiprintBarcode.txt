@@ -1,0 +1,50 @@
+<style>
+	.print-format table, .print-format tr, 
+	.print-format td, .print-format div, .print-format p {
+		font-family: Monospace;
+		line-height: 100%;
+		vertical-align: middle;
+	}
+	@media screen {
+		.print-format {
+			width:225px;
+			padding: 0.05in;
+			min-height: 152px;
+		}
+	}
+</style>
+{% for row in doc.items %}
+{% set serial_ids_list = row.serial_no.split("\n") %}
+{% for obj in serial_ids_list %}
+<div>
+        <div id="barcode-label" class="barcode-label" style="text-align:center;">
+            
+      <b><p style="font-size:15px;" class="mb-4"><br>{{row.item_code}}</p></b>
+      </div>
+    <div>
+     <center>
+       <svg class="barcode"
+       
+		
+		
+		jsbarcode-value="{{obj}}"
+		jsbarcode-textmargin="1"/>
+		</svg>
+		</center>
+       
+      </div>
+	</br>
+		
+		 
+		 
+		 <br>
+
+{% endfor %}
+{% endfor %}
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+		 <script>
+		     
+		     JsBarcode(".barcode" , "Bigger text", {
+  fontSize: 12,margin: 0,displayValue: true,height:60,
+}).init();
+		     </script>

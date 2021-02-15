@@ -1,0 +1,57 @@
+                        if (this.frm.doc.docstatus == 0) {
+                                this.frm.add_custom_button(__('Delivery Note'),
+                                        function () {
+                                                erpnext.utils.map_current_doc({
+                                                        method: "erpnext.stock.doctype.delivery_note.delivery_note.make_purchase_receipt",
+                                                        source_doctype: "Delivery Note",
+                                                        target: me.frm,
+                                                        setters: {
+//                                                                supplier: me.frm.doc.supplier || undefined,
+                                                        },
+                                                        get_query_filters: {
+                                                                docstatus: 1,
+                                                                status: ["not in", ["Closed", "On Hold"]],
+//                                                                per_received: ["<", 99.99],
+                                                                company: me.frm.doc.company
+                                                        }
+                                                })
+                                        }, __("Get items from"));
+                        }
+
+----------------------------------------------------------------
+
+@frappe.whitelist()
+def update_delivery_note_status(docname, status):
+        dn = frappe.get_doc("Delivery Note", docname)
+        dn.update_status(status)
+
+#@frappe.whitelist(allow_guest=True)
+#def make_purchase_receipt(source_name, target_doc=None):
+#       return _make_delivery_note(source_name, target_doc)
+
+@frappe.whitelist(allow_guest=True)
+def make_purchase_receipt(source_name, target_doc=None, ignore_permissions=False):
+#        customer = _make_customer(source_name, ignore_permissions)
+
+        doclist = get_mapped_doc("Delivery Note", source_name, {
+                        "Delivery Note": {
+                                "doctype": "Purchase Receipt",
+                                "validation": {
+                                        "docstatus": ["=", 1]
+                                }
+                        },
+                        "Delivery Note Item": {
+                                "doctype": "Purchase Receipt Item",
+                                "field_map": [
+                                        ["name", "prevdoc_detail_docname"],
+                                        ["parent", "prevdoc_docname"],
+                                        ["parenttype", "prevdoc_doctype"],
+                                        ["uom", "stock_uom"],
+                                        ["uom", "uom"]
+                                ]
+                        },
+                }, target_doc, ignore_permissions=ignore_permissions)
+
+        # postprocess: fetch shipping address, set missing values
+
+        return doclist
